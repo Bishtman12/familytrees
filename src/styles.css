@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .App {
+    font-family: serif;
+    text-align: center;
+  }
+  
+  .btn {
+    padding: 1.3em;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border: none;
+  }
+  

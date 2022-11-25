@@ -1,12 +1,12 @@
 import React from "react";
-import { render } from "react-dom";
-import Tree from "./Tree";
+import ReactDOM from "react-dom";
 
-const styles = {
-  fontFamily: "sans-serif",
-  textAlign: "center"
-};
+import App from "./App";
 
-const App = () => <Tree />;
-
-render(<App />, document.getElementById("root"));
+const rootElement = document.getElementById("root");
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  rootElement
+);
