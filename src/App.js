@@ -8,8 +8,8 @@ import data from "./data";
 const svgSquare = {
     shape: "node",
     shapeProps: {
-        height: 30,
-        width: 50
+        height: 20,
+        width: 40
     }
 };
 
@@ -30,15 +30,9 @@ function NodeLabel(node) {
     );
 }
 
-function Search(){
-    // x 
-    // check if x is equal to the 
-}
-
 export default function App() {
     const treeContainer = useRef();
     const tree = useRef();
-
     const [dimensions, setDimensions] = useState({
         width: innerWidth,
         height: innerHeight
@@ -72,6 +66,9 @@ export default function App() {
                     data={data}
                     ref={tree}
                     translate={translate}
+                    depthFactor = {230}
+                    pathFunc = "elbow"
+                    
                     nodeSvgShape={svgSquare}
                     style={{
                         height: "600px",

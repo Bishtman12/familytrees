@@ -23,16 +23,25 @@ const fulldata = {
                                                         {
                                                             name: "Pan Singh",
                                                             children: [
-                                                                { name: "Jodha Singh" },
-                                                                { name: "Darban Singh" },
+                                                                {
+                                                                    name: "Jodha Singh",
+                                                                    children: [{ name: "Neeraj" }]
+                                                                },
+                                                                { name: "Dara Singh" },
                                                                 { name: "Puran Singh" }
                                                             ]
                                                         },
                                                         {
                                                             name: "Anand Singh",
                                                             children: [
-                                                                { name: "Jagdish Singh" },
-                                                                { name: "Major Singh" },
+                                                                {
+                                                                    name: "Jagat Singh",
+                                                                    children: [{ name: "Bhargav" }]
+                                                                },
+                                                                {
+                                                                    name: "Major Singh",
+                                                                    children: [{ name: "Krishna" }]
+                                                                },
                                                                 { name: "Manjeet Singh" }
                                                             ]
                                                         }
@@ -41,9 +50,18 @@ const fulldata = {
                                                 {
                                                     name: "Bakhatawar Singh",
                                                     children: [
-                                                        { name: "Mahipal Singh" },
-                                                        { name: "Kirpal Singh" },
-                                                        { name: "Birbal Singh" }
+                                                        {
+                                                            name: "Mahipal Singh",
+                                                            children: [{ name: "Pankaj" }]
+                                                        },
+                                                        {
+                                                            name: "Kirpal Singh",
+                                                            children: [{ name: "Amit" }]
+                                                        },
+                                                        {
+                                                            name: "Birbal Singh",
+                                                            children: [{ name: "Golu" }, { name: "Mannu" }]
+                                                        }
                                                     ]
                                                 }
                                             ]
@@ -54,9 +72,18 @@ const fulldata = {
                                                 {
                                                     name: "Raje Singh",
                                                     children: [
-                                                        { name: "Girdhari Singh" },
-                                                        { name: "Jagat Singh" },
-                                                        { name: "Bharat Singh" }
+                                                        {
+                                                            name: "Girdhari Singh",
+                                                            children: [{ name: "Lucky" }]
+                                                        },
+                                                        {
+                                                            name: "Jagat Singh",
+                                                            children: [{ name: "Nandan" }]
+                                                        },
+                                                        {
+                                                            name: "Bharat Singh",
+                                                            children: [{ name: "Karn" }, { name: "Amit" }]
+                                                        }
                                                     ]
                                                 },
                                                 {
@@ -68,17 +95,29 @@ const fulldata = {
                                                 {
                                                     name: "Dayal Singh",
                                                     children: [
-                                                        { name: "Harish Singh" },
-                                                        { name: "Tony Singh" },
+                                                        {
+                                                            name: "Harish Singh",
+                                                            children: [{ name: "Ganesh" }, { name: "Basant" }]
+                                                        },
+                                                        {
+                                                            name: "Kuwar Singh",
+                                                            children: [{ name: "Aman" }, { name: "Amit" }]
+                                                        },
                                                         { name: "Prithvi Pal Singh" }
                                                     ]
                                                 },
                                                 {
                                                     name: "Mahendar Singh",
                                                     children: [
-                                                        { name: "Dinesh Singh" },
+                                                        {
+                                                            name: "Dinesh Singh",
+                                                            children: [{ name: "Rohan" }]
+                                                        },
                                                         { name: "Satpal Singh" },
-                                                        { name: "Yashpal Singh" }
+                                                        {
+                                                            name: "Yashpal Singh",
+                                                            children: [{ name: "Rudra" }]
+                                                        }
                                                     ]
                                                 }
                                             ]
@@ -95,7 +134,7 @@ const fulldata = {
                                     name: "Channer Singh",
                                     children: [
                                         {
-                                            name: "Nan Singh",
+                                            name: "Nain Singh",
                                             children: [
                                                 {
                                                     name: "Gusain Singh",
@@ -104,7 +143,10 @@ const fulldata = {
                                                         { name: "Kailash Singh" }
                                                     ]
                                                 },
-                                                { name: "Lacham Singh" }
+                                                {
+                                                    name: "Lacham Singh",
+                                                    children: [{ name: "Raju" }]
+                                                }
                                             ]
                                         },
                                         {
@@ -138,7 +180,10 @@ const fulldata = {
                                                 {
                                                     name: "Gamal Singh",
                                                     children: [
-                                                        { name: "Ravinder Singh" }
+                                                        {
+                                                            name: "Ravinder Singh",
+                                                            children: [{ name: "Naitik" }]
+                                                        }
                                                     ]
                                                 }
                                             ]
@@ -175,19 +220,30 @@ const fulldata = {
                                                 {
                                                     name: "Jeevan Singh",
                                                     children: [
-                                                        { name: "Pan Singh" },
-                                                        { name: "Prem Singh" }
+                                                        {
+                                                            name: "Pan Singh",
+                                                            children: [{ name: "Amit" }, { name: "Sumit" }]
+                                                        },
+                                                        {
+                                                            name: "Prem Singh",
+                                                            children: [{ name: "Lucky" }, { name: "Shivam" }, { name: "Vishal" }]
+                                                        }
                                                     ]
                                                 },
                                                 {
                                                     name: "Govind Singh",
                                                     children: [
+                                                        { name: "Pappu Singh" },
                                                         { name: "Kailash Singh" },
+                                                        { name: "Vijay Pal Singh" },
                                                         { name: "Mahendra Singh" },
-                                                        { name: "Babli Singh" }
+                                                        { name: "Virendra Singh" }
                                                     ]
                                                 },
-                                                { name: "Mohan Singh" }
+                                                {
+                                                    name: "Mohan Singh",
+                                                    children: [{ name: "Surendra" }, { name: "Ravi" }]
+                                                }
                                             ]
                                         },
                                         {
@@ -209,7 +265,7 @@ const fulldata = {
                                                     name: "Harpal Singh",
                                                     children: [
                                                         { name: "Deepu Singh" },
-                                                        { name: "... Singh" }
+                                                        { name: "Suraj Singh" }
                                                     ]
                                                 }
                                             ]
@@ -220,8 +276,14 @@ const fulldata = {
                                                 {
                                                     name: "Soban Singh",
                                                     children: [
-                                                        { name: "Gopal Singh" },
-                                                        { name: "Diwan Singh" }
+                                                        {
+                                                            name: "Gopal Singh",
+                                                            children: [{ name: "Sanjay" }]
+                                                        },
+                                                        {
+                                                            name: "Diwan Singh",
+                                                            children: [{ name: "Ashish" }]
+                                                        }
                                                     ]
                                                 }
                                             ]
@@ -276,7 +338,7 @@ const fulldata = {
                                                     ]
                                                 },
                                                 {
-                                                    name: "Man Singh",
+                                                    name: "Maan Singh",
                                                     children: [
                                                         { name: "Lalit Singh" }
                                                     ]
@@ -351,8 +413,12 @@ const fulldata = {
                                         {
                                             name: "Trilok Singh",
                                             children: [
-                                                { name: "Chaner Singh" },
-                                                { name: "Man Singh" }
+                                                { name: "Surendar Singh" },
+                                                {
+                                                    name: "Chandan Singh",
+                                                    children: [{ name: "Shubham" }, { name: "Sumit" }]
+                                                },
+                                                { name: "Maan Singh" }
                                             ]
                                         },
                                         {
@@ -381,12 +447,18 @@ const fulldata = {
                                     name: "Jasodh Singh",
                                     children: [
                                         {
-                                            name: "Hukkam Singh",
+                                            name: "Hukam Singh",
                                             children: [
-                                                { name: "Mahesh Singh" }
+                                                {
+                                                    name: "Mahesh Singh",
+                                                    children: [{ name: "Himanshu" }]
+                                                }
                                             ]
                                         },
-                                        { name: "Mahipal Singh" },
+                                        {
+                                            name: "Mahipal Singh",
+                                            children: [{ name: "Pushkar" }]
+                                        },
                                         { name: "Anand Singh" }
                                     ]
                                 }
@@ -398,7 +470,7 @@ const fulldata = {
                     name: "Khadak Singh",
                     children: [
                         {
-                            name: "Man Singh",
+                            name: "Maan Singh",
                             children: [
                                 {
                                     name: "Hayat Singh",
@@ -410,22 +482,26 @@ const fulldata = {
                                                 {
                                                     name: "Raghuveer Singh",
                                                     children: [
-                                                        { name: "Deepak Singh" },
-                                                        { name: 0 },
+                                                        {
+                                                            name: "Kuldeep Singh",
+
+                                                        },
+                                                        {
+                                                            name: "Kailash Singh",
+
+                                                        },
                                                         { name: "Kulbeer Singh" }
                                                     ]
                                                 },
                                                 {
                                                     name: "Surender Singh",
                                                     children: [
-                                                        { name: 0 }
+                                                        { name: "Vaibhav" },
+                                                        { name: "Shivansh" }
                                                     ]
                                                 },
                                                 {
-                                                    name: "Ranjit Singh",
-                                                    children: [
-                                                        { name: 0 }
-                                                    ]
+                                                    name: "Ranjit Singh"
                                                 }
                                             ]
                                         },
@@ -435,21 +511,30 @@ const fulldata = {
                                                 {
                                                     name: "Uttam Singh",
                                                     children: [
-                                                        { name: "Ramesh Singh" },
-                                                        { name: "Bharat Singh" },
-                                                        { name: "Jagmohan Singh" }
+                                                        {
+                                                            name: "Ramesh Singh",
+                                                            children: [{ name: "Ravindra" }]
+                                                        },
+                                                        {
+                                                            name: "Bharat Singh",
+                                                            children: [{ name: "Vishal" }]
+                                                        },
+                                                        {
+                                                            name: "Jagmohan Singh",
+                                                            children: [{ name: "Anmol" }]
+                                                        }
                                                     ]
                                                 },
                                                 {
                                                     name: "Pooran Singh",
                                                     children: [
-                                                        { name: 0 }
+                                                        { name: "Vivek" }
                                                     ]
                                                 },
                                                 {
                                                     name: "Arjun Singh",
                                                     children: [
-                                                        { name: 0 }
+                                                        { name: "Sunil" }
                                                     ]
                                                 }
                                             ]
@@ -457,17 +542,24 @@ const fulldata = {
                                         {
                                             name: "Pratap Singh",
                                             children: [
-                                                { name: "Kailash Singh",
-                                                children: [
-                                                    { name: 0 }
-                                                ] }
+                                                {
+                                                    name: "Kailash Singh",
+                                                    children: [
+                                                        { name: "Unknown" }
+                                                    ]
+                                                }
                                             ]
                                         },
-                                        { name: "Pan Singh",
-                                        children: [
-                                            { name: "Lalit Singh" },
-                                            { name: 0 }
-                                        ] }
+                                        {
+                                            name: "Pan Singh",
+                                            children: [
+                                                {
+                                                    name: "Lalit Singh",
+                                                    children: [{ name: "Lakshya" }, { name: "Vikrant" }]
+                                                },
+                                                { name: "Manmohan Singh" }
+                                            ]
+                                        }
                                     ]
                                 }
                             ]
