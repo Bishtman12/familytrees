@@ -16,15 +16,20 @@ const svgSquare = {
 const innerHeight = window.innerHeight;
 const innerWidth = window.innerWidth;
 
+function search(data, name) {
+
+}
+
 function NodeLabel(node) {
     const { nodeData } = node;
     const hasChildren = nodeData._children;
+    const btnClass = hasChildren ? "button " : "button--secondary"
     const btnStyle = {
-        background: hasChildren ? "#7FFFD4" : "#8E44AD",
-        cursor: hasChildren ? "pointer" : "default"
+        cursor: hasChildren ? "pointer" : "default",
+
     };
     return (
-        <button className="btn" style={btnStyle}>
+        <button className={btnClass} style={btnStyle}>
             {nodeData.name}
         </button>
     );
@@ -53,8 +58,6 @@ export default function App() {
         });
     }, [dimensions]);
 
-    console.log("tree", tree);
-
     return (
         <div className="App">
             <div
@@ -66,11 +69,16 @@ export default function App() {
                     data={data}
                     ref={tree}
                     translate={translate}
-                    depthFactor = {230}
-                    pathFunc = "elbow"
-                    
+                    depthFactor={230}
+                    pathFunc="elbow"
+                    collapsible={true}
+                    useCollapseData={true}
                     nodeSvgShape={svgSquare}
-                    style={{
+                    styles={{
+                        links: {
+                            stroke: 'black',
+                            strokeWidth: "2px",
+                        },
                         height: "600px",
                         width: "600px"
                     }}
