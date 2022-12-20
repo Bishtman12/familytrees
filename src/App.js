@@ -14,9 +14,7 @@ const svgSquare = {
 const innerHeight = window.innerHeight;
 const innerWidth = window.innerWidth;
 
-function search(data, name) {
-
-}
+function search(data, name) {}
 
 function NodeLabel(node) {
     const { nodeData } = node;
@@ -67,18 +65,16 @@ export default function App() {
                     data={data}
                     ref={tree}
                     translate={translate}
-                    depthFactor={230}
-                    pathFunc="elbow"
+                    depthFactor={160}
+                    pathFunc="step"
                     collapsible={true}
                     useCollapseData={true}
                     nodeSvgShape={svgSquare}
                     styles={{
                         links: {
                             stroke: 'black',
-                            strokeWidth: "2px",
+                            strokeWidth: "1px",
                         },
-                        height: "600px",
-                        width: "600px"
                     }}
                     nodeSize={
                         {
@@ -90,7 +86,7 @@ export default function App() {
                     nodeLabelComponent={{
                         render: <NodeLabel className="myLabelComponentInSvg" />,
                         foreignObjectWrapper: {
-                            y: -10,
+                            y: -5,
                             x: -50
                         }
                     }}
