@@ -1,12 +1,17 @@
+import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import App from "./App";
-
-const rootElement = document.getElementById("root");
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  rootElement
+  <Router>
+    {/* <Navigation /> */}
+    <Routes>
+      <Route path="/" element={<App />} />
+      {/* <Route path="/about" element={<About />} />
+      <Route path="/tree" element={<Contact />} /> */}
+    </Routes>
+    {/* <Footer /> */}
+  </Router>,
+  document.getElementById("root")
 );

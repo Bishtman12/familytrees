@@ -1,8 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./styles.css";
-
 import Tree from "react-d3-tree";
-
 import data from "./data";
 
 const svgSquare = {
@@ -23,7 +21,7 @@ function search(data, name) {
 function NodeLabel(node) {
     const { nodeData } = node;
     const hasChildren = nodeData._children;
-    const btnClass = hasChildren ? "button " : "button--secondary"
+    const btnClass = hasChildren ? "button " : "button-secondary"
     const btnStyle = {
         cursor: hasChildren ? "pointer" : "default",
 
@@ -82,6 +80,11 @@ export default function App() {
                         height: "600px",
                         width: "600px"
                     }}
+                    nodeSize={
+                        {
+                            x: 170,
+                            y: 100
+                        }}
                     orientation="vertical"
                     allowForeignObjects
                     nodeLabelComponent={{
@@ -92,7 +95,7 @@ export default function App() {
                         }
                     }}
                     separation={{
-                        siblings: 1,
+                        siblings: 1.2,
                         nonSiblings: 2.5
                     }}
                 />
