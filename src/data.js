@@ -1792,7 +1792,7 @@ var nameIdMapping = {
 }
 
 var searchMapping = {
-    '1' : '1',
+    '1': '1',
     '2': '1',
     '3': '1,2',
     '4': '1,2,3',
@@ -2000,10 +2000,10 @@ var searchMapping = {
     '206': '1,145,175,176,177,203,204',
     '207': '1,145,175,176,177,203'
 }
+
 function markFalse(data, id) {
     for (let ele of data.children) {
         if (ele.id == id) {
-            console.log(ele.id, id)
             ele._collapsed = false;
         }
         if (ele.children) {
@@ -2032,7 +2032,6 @@ function helperMarkCollapsed(id) {
 }
 // function to all the ids of the node
 function markCollapsed(allIds) {
-    console.log(allIds)
     // run for each particular id
     for (let ele of allIds) {
         helperMarkCollapsed(ele);
@@ -2056,6 +2055,7 @@ function search(name) {
     }
     markCollapsed(allIds);
 }
-search("Chetan Singh")
+// console.log(fulldata)
+// export { search }
 
-export default fulldata
+// export default fulldata
