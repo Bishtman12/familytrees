@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./styles.scss";
-
-const data = require("./SEARCH.json");
+const searchData = require("./Data.json");
+const data = searchData.NAME_ID_MAPPING
 
 export default function Navbar() {
     // Declare a state variable for the search query
@@ -38,7 +38,6 @@ export default function Navbar() {
         setSearchQuery(key);
         // Filter the data based on the search query
         filterData(key);
-        search(key);
     };
 
     return (
