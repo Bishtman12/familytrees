@@ -1,44 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./styles.scss";
-const searchData = require("./Data.json");
-const data = searchData.NAME_ID_MAPPING
 
 export default function Navbar() {
-    // Declare a state variable for the search query
-    const [searchQuery, setSearchQuery] = useState("");
-
-    // Declare a state variable for the filtered data
-    const [filteredData, setFilteredData] = useState(
-        Object.entries(data).map(([key, value]) => ({ key, value }))
-    );
-
-    // Define a function to filter the data based on the search query
-    const filterData = (query) => {
-        // Filter the data based on the query
-        const filtered = Object.entries(data)
-            .filter(([key]) => key.toLowerCase().includes(query.toLowerCase()))
-            .map(([key, value]) => ({ key, value }));
-
-        // Update the filtered data state variable
-        setFilteredData(filtered);
-    };
-
-    // Handle the change event of the input element
-    const handleChange = (event) => {
-        // Update the search query state variable
-        setSearchQuery(event.target.value);
-
-        // Filter the data based on the search query
-        filterData(event.target.value);
-    };
-
-    // Handle the click event of the search dropdown items
-    const handleClick = (key) => {
-        // Update the search query state variable with the clicked item
-        setSearchQuery(key);
-        // Filter the data based on the search query
-        filterData(key);
-    };
 
     return (
         <div>
@@ -55,20 +18,11 @@ export default function Navbar() {
                     <a className="nav-link disabled hoverable margin-right" href="/"> Load Full Tree </a>
                     <form className="form-inline my-2 my-lg-0">
                         <div className="input-group">
-                            <input type="text" autoComplete="off" className="form-control" placeholder="Search" aria-label="Search" name="q" value={searchQuery} onChange={handleChange} />
+                            <input type="text" autoComplete="off" className="form-control" placeholder="Search" aria-label="Search" name="q"  />
                         </div>
                     </form>
                 </div>
             </nav>
-
-            {/* Display the filtered data if the search query is not empty */}
-            {searchQuery && (
-                <ul>
-                    {filteredData.map(({ key }) => (
-                        <li key={key} onClick={() => handleClick(key)}>{key}</li>
-                    ))}
-                </ul>
-            )}
         </div>
     )
 };
