@@ -29,6 +29,8 @@ function NodeLabel(node) {
 }
 
 export default function App() {
+    const [treeData, setTreeData] = useState(data);
+    const [searchName, setSearchName] = useState('');
 
     const treeContainer = useRef();
     const tree = useRef();
@@ -51,17 +53,31 @@ export default function App() {
         });
     }, [dimensions]);
 
+    const handleSearch = () => {
+        fetch(`http://localhost:8000/v1/tree/${searchName}`)
+            .then((response) => response.json())
+            .then((data) => setTreeData(data.result))
+            .catch((error) => console.error(error));
+    };
 
     return (
         <div className="App">
+            <div className="search-container">
+                <input
+                    type="text"
+                    placeholder="Search for a name"
+                    value={searchName}
+                    onChange={(e) => setSearchName(e.target.value)}
+                />
+                <button onClick={handleSearch}>Search</button>
+            </div>
             <div
                 id="treeWrapper"
                 ref={treeContainer}
                 style={{ width: innerWidth, height: innerHeight }}
-
             >
                 <Tree
-                    data={data}
+                    data={treeData}
                     ref={tree}
                     translate={translate}
                     depthFactor={160}
