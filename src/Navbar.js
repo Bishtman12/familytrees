@@ -1,28 +1,39 @@
-import React from "react";
+import React, { useRef } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
 import "./styles.scss";
 
-export default function Navbar() {
+function Navbar({searchName, setSearchName, handleSearch}) {
+    const navRef = useRef();
+
+    const showNavbar = () => {
+        navRef.current.classList.toggle("responsive_nav");
+    };
 
     return (
-        <div>
-            <nav className="navbar navbar-expand-sm navbar-light ">
-                <a className="navbar-brand hoverable mx-4 my-8" href="/">Bisht Family Tree</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse my-4 mx-5" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto">
-                        <a className="nav-link disabled hoverable" href="/home">Home</a>
-                        <a className="nav-link disabled hoverable" href="/about">About</a>
-                    </ul>
-                    <a className="nav-link disabled hoverable margin-right" href="/"> Load Full Tree </a>
-                    <form className="form-inline my-2 my-lg-0">
-                        <div className="input-group">
-                            <input type="text" autoComplete="off" className="form-control" placeholder="Search" aria-label="Search" name="q"  />
-                        </div>
-                    </form>
+        <header>
+            <h3>Family Tree</h3>
+            <nav ref={navRef}>
+                <a href="/#">Home</a>
+                <a href="/#">Load Full Tree</a>
+                <a href="/#">About me</a>
+                <div className="search-container">
+                <input
+                        type="text"
+                        placeholder="Search for a name"
+                        value={searchName}
+                        onChange={(e) => setSearchName(e.target.value)}
+                    />
+                    <button onClick={handleSearch}>Search</button>
                 </div>
+                <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+                    <FaTimes />
+                </button>
             </nav>
-        </div>
-    )
-};
+            <button className="nav-btn" onClick={showNavbar}>
+                <FaBars />
+            </button>
+        </header>
+    );
+}
+
+export default Navbar;

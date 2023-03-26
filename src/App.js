@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import "./styles.scss";
 import Tree from "react-d3-tree";
 const data = require("./Data.json");
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const svgSquare = {
     shape: "node",
@@ -33,6 +34,11 @@ export default function App() {
     const [searchName, setSearchName] = useState('');
 
     const treeContainer = useRef();
+    const navRef = useRef();
+
+    const showNavbar = () => {
+        navRef.current.classList.toggle("responsive_nav");
+    };
     const tree = useRef();
     const [dimensions, setDimensions] = useState({
         width: innerWidth,
@@ -62,15 +68,29 @@ export default function App() {
 
     return (
         <div className="App">
-            <div className="search-container">
-                <input
-                    type="text"
-                    placeholder="Search for a name"
-                    value={searchName}
-                    onChange={(e) => setSearchName(e.target.value)}
-                />
-                <button onClick={handleSearch}>Search</button>
-            </div>
+            <header>
+                <h3>Family Tree</h3>
+                <nav ref={navRef}>
+                    <a href="/#">Home</a>
+                    <a href="/#">Load Full Tree</a>
+                    <a href="/#">About me</a>
+                    <div className="search-container">
+                        <input
+                            type="text"
+                            placeholder="Search for a name"
+                            value={searchName}
+                            onChange={(e) => setSearchName(e.target.value)}
+                        />
+                        <button onClick={handleSearch}>Search</button>
+                    </div>
+                    <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+                        <FaTimes />
+                    </button>
+                </nav>
+                <button className="nav-btn" onClick={showNavbar}>
+                    <FaBars />
+                </button>
+            </header>
             <div
                 id="treeWrapper"
                 ref={treeContainer}
