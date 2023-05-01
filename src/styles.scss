@@ -4,7 +4,6 @@
 * {
 	padding: 0;
 	margin: 0;
-	box-sizing: border-box;
 	font-family: "Titillium Web", sans-serif;
 }
 
@@ -42,7 +41,6 @@ header .nav-btn {
 	border: none;
 	outline: none;
 	color: var(--textColor);
-	visibility: hidden;
 	opacity: 0;
 	font-size: 1.8rem;
 }
@@ -55,7 +53,6 @@ nav {
 
 @media only screen and (max-width: 1024px) {
 	header .nav-btn {
-		visibility: visible;
 		opacity: 1;
 	}
 

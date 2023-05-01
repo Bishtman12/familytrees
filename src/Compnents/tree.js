@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
-import "./styles.scss";
+import "../styles.scss";
 import Tree from "react-d3-tree";
-const data = require("./Data.json");
-import { FaBars, FaTimes } from "react-icons/fa";
+const data = require("../Data.json");
+import { FaBars } from "react-icons/fa";
 
 const svgSquare = {
     shape: "node",
@@ -29,9 +29,11 @@ function NodeLabel(node) {
     );
 }
 
-export default function App() {
+
+function FamilyTree() {
     const [treeData, setTreeData] = useState(data);
     const [searchName, setSearchName] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
 
     const treeContainer = useRef();
     const navRef = useRef();
@@ -46,6 +48,19 @@ export default function App() {
     });
     const [translate, setTranslate] = useState({ x: 0, y: 0 });
 
+    const handleSuggestions = (e) => {
+        const value = e.target.value;
+        setSearchName(value);
+        // Call the API to get suggestions based on the current search query
+        fetch(`http://127.0.0.1:8000/v1/${value}/suggest`)
+            .then(response => response.json())
+            .then(data => {
+                // Update the state with the suggestions returned by the API
+                console.log(data)
+                setSuggestions(data);
+            })
+            .catch(error => console.error(error));
+    };
     useEffect(() => {
         if (treeContainer.current) {
             setDimensions(treeContainer.current.getBoundingClientRect());
@@ -60,7 +75,7 @@ export default function App() {
     }, [dimensions]);
 
     const handleSearch = () => {
-        fetch(`http://localhost:8000/v1/tree/${searchName}`)
+        fetch(`http://13.233.123.158:8000/v1/tree/${searchName}`)
             .then((response) => response.json())
             .then((data) => setTreeData(data.result))
             .catch((error) => console.error(error));
@@ -70,7 +85,7 @@ export default function App() {
         <div className="App">
             <header>
                 <h3>Family Tree</h3>
-                <nav ref={navRef}>
+                <nav>
                     <a href="/#">Home</a>
                     <a href="/#">Load Full Tree</a>
                     <a href="/#">About me</a>
@@ -79,13 +94,20 @@ export default function App() {
                             type="text"
                             placeholder="Search for a name"
                             value={searchName}
-                            onChange={(e) => setSearchName(e.target.value)}
+                            onChange={handleSuggestions} // Update the onChange event handler
                         />
+                        <ul>
+                            {Array.isArray(suggestions) && suggestions.map((suggestion) => (
+                                <li key={suggestion.id}>
+                                    <button onClick={() => {
+                                        setSearchName(suggestion.name);
+                                        handleSearch();
+                                    }}>{suggestion.name}</button>
+                                </li>
+                            ))}
+                        </ul>
                         <button onClick={handleSearch}>Search</button>
                     </div>
-                    <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-                        <FaTimes />
-                    </button>
                 </nav>
                 <button className="nav-btn" onClick={showNavbar}>
                     <FaBars />
@@ -133,3 +155,5 @@ export default function App() {
         </div>
     );
 }
+
+export default FamilyTree
