@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import "../styles.scss";
 import Tree from "react-d3-tree";
-const data = require("../Data.json");
-import { FaBars } from "react-icons/fa";
+import { useGlobalContext } from "../context/global"
+import { useMemo } from "react";
 
 const svgSquare = {
     shape: "node",
@@ -31,36 +31,24 @@ function NodeLabel(node) {
 
 
 function FamilyTree() {
-    const [treeData, setTreeData] = useState(data);
-    const [searchName, setSearchName] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
+
+    const { treeData } = useGlobalContext();
+
+    console.log(treeData)
+
+    const [TreeData, setTreeData] = useState(treeData)
+
 
     const treeContainer = useRef();
-    const navRef = useRef();
 
-    const showNavbar = () => {
-        navRef.current.classList.toggle("responsive_nav");
-    };
     const tree = useRef();
     const [dimensions, setDimensions] = useState({
         width: innerWidth,
         height: innerHeight
     });
+
     const [translate, setTranslate] = useState({ x: 0, y: 0 });
 
-    const handleSuggestions = (e) => {
-        const value = e.target.value;
-        setSearchName(value);
-        // Call the API to get suggestions based on the current search query
-        fetch(`http://127.0.0.1:8000/v1/${value}/suggest`)
-            .then(response => response.json())
-            .then(data => {
-                // Update the state with the suggestions returned by the API
-                console.log(data)
-                setSuggestions(data);
-            })
-            .catch(error => console.error(error));
-    };
     useEffect(() => {
         if (treeContainer.current) {
             setDimensions(treeContainer.current.getBoundingClientRect());
@@ -74,56 +62,19 @@ function FamilyTree() {
         });
     }, [dimensions]);
 
-    const handleSearch = () => {
-        fetch(`http://13.233.123.158:8000/v1/tree/${searchName}`)
-            .then((response) => response.json())
-            .then((data) => setTreeData(data.result))
-            .catch((error) => console.error(error));
-    };
 
     return (
         <div className="App">
-            <header>
-                <h3>Family Tree</h3>
-                <nav>
-                    <a href="/#">Home</a>
-                    <a href="/#">Load Full Tree</a>
-                    <a href="/#">About me</a>
-                    <div className="search-container">
-                        <input
-                            type="text"
-                            placeholder="Search for a name"
-                            value={searchName}
-                            onChange={handleSuggestions} // Update the onChange event handler
-                        />
-                        <ul>
-                            {Array.isArray(suggestions) && suggestions.map((suggestion) => (
-                                <li key={suggestion.id}>
-                                    <button onClick={() => {
-                                        setSearchName(suggestion.name);
-                                        handleSearch();
-                                    }}>{suggestion.name}</button>
-                                </li>
-                            ))}
-                        </ul>
-                        <button onClick={handleSearch}>Search</button>
-                    </div>
-                </nav>
-                <button className="nav-btn" onClick={showNavbar}>
-                    <FaBars />
-                </button>
-            </header>
             <div
                 id="treeWrapper"
                 ref={treeContainer}
                 style={{ width: innerWidth, height: innerHeight }}
             >
                 <Tree
-                    data={treeData}
+                    data={TreeData}
                     ref={tree}
                     translate={translate}
                     depthFactor={160}
-                    pathFunc="step"
                     collapsible={true}
                     useCollapseData={true}
                     nodeSvgShape={svgSquare}
