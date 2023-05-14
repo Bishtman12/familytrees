@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import "../styles.scss";
 import Tree from "react-d3-tree";
 import { useGlobalContext } from "../context/global"
-import { useMemo } from "react";
+import initialTreeData from "../Data.json"
 
 const svgSquare = {
     shape: "node",
@@ -34,26 +34,14 @@ function FamilyTree() {
 
     const { treeData } = useGlobalContext();
 
-    console.log(treeData)
-
-    const [TreeData, setTreeData] = useState(treeData)
-
-
-    const treeContainer = useRef();
-
     const tree = useRef();
+
     const [dimensions, setDimensions] = useState({
         width: innerWidth,
         height: innerHeight
     });
 
     const [translate, setTranslate] = useState({ x: 0, y: 0 });
-
-    useEffect(() => {
-        if (treeContainer.current) {
-            setDimensions(treeContainer.current.getBoundingClientRect());
-        }
-    }, [treeContainer]);
 
     useEffect(() => {
         setTranslate({
@@ -67,11 +55,10 @@ function FamilyTree() {
         <div className="App">
             <div
                 id="treeWrapper"
-                ref={treeContainer}
                 style={{ width: innerWidth, height: innerHeight }}
             >
                 <Tree
-                    data={TreeData}
+                    data={treeData ? treeData : initialTreeData}
                     ref={tree}
                     translate={translate}
                     depthFactor={160}
