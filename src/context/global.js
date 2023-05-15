@@ -19,7 +19,6 @@ const reducer = (state, action) => {
         case GET_TREE_DATA:
             return { ...state, treeData: action.payload, loading: false }
         case GET_SEARCH_TREE_DATA:
-            console.log("TREE_DATA", action, action.payload)
             return { ...state, treeData: action.payload.result, loading: false }
         case GET_SEARCH_SUGGESTIONS:
             return { ...state, searchResults: action.payload, loading: false }
@@ -85,15 +84,15 @@ export const GlobalContextProvider = ({ children }) => {
 
     // get search name array
     const handleSuggestions = async (value) => {
-        dispatch({ type: GET_SEARCH_SUGGESTIONS })
+        if (!value) { dispatch({ type: GET_SEARCH_SUGGESTIONS, payload: [] }) }
         try {
             const response = await fetch(`http://127.0.0.1:8000/v1/${value}/suggest`);
             const data = await response.json();
-            dispatch({ type: GET_SEARCH_SUGGESTIONS, payload: data })
+            dispatch({ type: GET_SEARCH_SUGGESTIONS, payload: data?.result.slice(0,5) ?? [] })
         }
         catch {
             // get the whole array or empty array of names
-            dispatch({ type: GET_SEARCH_SUGGESTIONS, payload: initialTreeData })
+            dispatch({ type: GET_SEARCH_SUGGESTIONS, payload: [] })
         }
     };
 
