@@ -63,6 +63,7 @@ function FamilyTree() {
                         ref={tree}
                         translate={translate}
                         depthFactor={160}
+                        pathFunc={"step"}
                         collapsible={true}
                         useCollapseData={true}
                         nodeSvgShape={svgSquare}
