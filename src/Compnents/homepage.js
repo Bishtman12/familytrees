@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useGlobalContext } from '../context/global';
 import About from './about';
 import FamilyTree from './tree';
 
 function Homepage() {
+
+    const [toggle, toggleNav] = useState(false);
+
     const {
         search,
         handleSuggestions,
@@ -30,184 +33,259 @@ function Homepage() {
     };
 
     const handleSuggestionClick = (suggestion) => {
+        console.log("suggestion", suggestion)
         handleChange({ target: { value: suggestion } });
         handleSubmit();
         setRendered('search_tree');
     };
 
     return (
-        <HomepageStyled>
-            <header>
-                <div className='search-container'>
-                    <div className='logo'>
-                        <a href='/' onClick={() => setRendered('full_tree')}>
-                            Family Tree
-                        </a>
-                    </div>
-                    <form action='' className='search-form' onSubmit={handleSubmit}>
-                        <div className='input-control'>
-                            <input
-                                type='text'
-                                placeholder='Search Name'
-                                value={search}
-                                onChange={(e) => {
-                                    handleChange(e);
-                                    handleSuggestions(e.target.value);
-                                }}
-                            />
-                            {searchResults && searchResults.length > 0 && (
-                                <ul className='suggestions'>
-                                    {searchResults.map((result, index) => (
-                                        <li key={index} onClick={() => handleSuggestionClick(result)}>
-                                            {result}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                            <button type='submit' onSubmit={handleSubmit}>
-                                Search
-                            </button>
-                        </div>
-                    </form>
-                    <div className='filter-btn-right'>
-                        <a className='button-nav' href='/'>
-                            Home
-                        </a>
-                        <a
-                            className='button-nav'
-                            onClick={() => {
-                                setRendered('full_tree');
-                                getTreeData();
-                            }}
-                        >
+        <>
+            <Nav>
+                <Logo href='/' onClick={() => setRendered('full_tree')}>
+                    Family Tree
+                </Logo>
+                <Search>
+                    <SearchIcon className="fa fa-search" />
+                    <SearchInput
+                        type="text"
+                        placeholder="Search..."
+                        value={search}
+                        onChange={(e) => {
+                            handleChange(e);
+                            handleSuggestions(e.target.value);
+                        }}
+                    />
+                    {searchResults.length > 0 && (
+                        <SuggestionsList>
+                            {searchResults.map((suggestion) => (
+                                <SuggestionItem
+                                    key={suggestion}
+                                    onClick={
+                                        (e) =>
+                                            handleSubmit(e)
+                                    }
+                                >
+                                    {suggestion}
+                                </SuggestionItem>
+                            ))}
+                        </SuggestionsList>
+                    )}
+                </Search>
+                <Menu>
+                    <Item>
+                        <Link onClick={() => {
+                            setRendered('full_tree');
+                            getTreeData();
+                        }}>
                             Load Full Tree
-                        </a>
-                        <a className='button-nav' onClick={() => setRendered('about_me')}>
+                        </Link>
+                    </Item>
+                    <Item>
+                        <Link onClick={() => setRendered('about_me')}>
                             About me
-                        </a>
-                    </div>
-                </div>
-            </header>
+                        </Link>
+                    </Item>
+                    <Item>
+                        <Link onClick={() => setRendered('about_me')}>
+                            Contact Us
+                        </Link>
+                    </Item>
+                </Menu>
+                <NavIcon onClick={() => toggleNav(!toggle)}>
+                    <Line open={toggle} />
+                    <Line open={toggle} />
+                    <Line open={toggle} />
+                </NavIcon>
+            </Nav>
+            <Overlay open={toggle}>
+                <OverlayMenu open={toggle}>
+                    <OverlaySearch>
+                        <OverlaySearchIcon className="fa fa-search" />
+                        <OverlaySearchInput type="text" placeholder="Search..." />
+                    </OverlaySearch>
+                    <Item>
+                        <Link onClick={() => {
+                            setRendered('full_tree');
+                            getTreeData();
+                        }}>
+                            Load Full Tree
+                        </Link>
+                    </Item>
+                    <Item>
+                        <Link onClick={() => setRendered('about_me')}>
+                            About me
+                        </Link>
+                    </Item>
+                    <Item>
+                        <Link onClick={() => setRendered('about_me')}>
+                            Contact us
+                        </Link>
+                    </Item>
+                </OverlayMenu>
+            </Overlay>
             {switchComponent()}
-        </HomepageStyled>
+        </>
     );
 }
+const SuggestionsList = styled.ul`
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  margin: 0;
+`;
 
+const SuggestionItem = styled.li`
+  padding: 8px 16px;
+  cursor: pointer;
 
-const HomepageStyled = styled.div`
-  background-color: #ededed;
+  :hover {
+    background-color: #f1f1f1;
+  }
+`;
+const Nav = styled.nav`
+  padding: 0 20px;
+  min-height: 9vh;
+  background: #141E30;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
-  header {
-    padding: 2rem 5rem;
-    width: 100%;
-    margin: 0 auto;
-    transition: all 0.4s ease-in-out;
+const Logo = styled.h1`
+  font-size: 25px;
+  color: white;
+`;
 
-    @media screen and (max-width: 1530px) {
-      width: 100%;
-    }
+const Menu = styled.ul`
+  list-style: none;
+  display: flex;
 
-    .search-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      flex-grow: 1;
-      justify-content: center;
+  li:nth-child(2) {
+    margin: 0px 20px;
+  }
 
-      .filter-btn-right {
-        margin-left: auto;
-        font-size: 1.2rem;
-        .button-nav {
-          padding: 1rem;
-        }
-      }
-
-      .logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        margin-right: auto;
-        font-size: 3.2rem;
-      }
-
-      .input-control {
-        position: relative;
-        transition: all 0.4s ease-in-out;
-        flex-grow: 1;
-        display: flex;
-        align-items: center;
-
-        input[type="text"] {
-          width: 100%;
-          padding: 0.7rem 1rem;
-          border: none;
-          outline: none;
-          border-radius: 30px;
-          font-size: 1.2rem;
-          background-color: #fff;
-          border: 5px solid #e5e7eb;
-          transition: all 0.4s ease-in-out;
-        }
-
-        .suggestions {
-          position: absolute;
-          z-index: 999;
-          background-color: #fff;
-          border: 5px solid #e5e7eb;
-          width: 100%;
-          top: 60px;
-          left: 0;
-          max-height: 300px;
-          overflow-y: auto;
-        }
-
-        .suggestion-item {
-          padding: 0.7rem 1rem;
-          cursor: pointer;
-
-          &:hover {
-            background-color: #e5e7eb;
-          }
-        }
-
-        button[type="submit"] {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.7rem 1.5rem;
-          outline: none;
-          border-radius: 30px;
-          font-size: 1.2rem;
-          background-color: #fff;
-          cursor: pointer;
-          transition: all 0.4s ease-in-out;
-          font-family: inherit;
-          border: 5px solid #e5e7eb;
-        }
-      }
-
-      form {
-        position: relative;
-        width: 30%;
-        .input-control {
-          position: relative;
-          transition: all 0.4s ease-in-out;
-        }
-
-        button[type="submit"] {
-          position: absolute;
-          right: 0;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-      }
-    }
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
+const Item = styled.li``;
+
+const Link = styled.a`
+
+  color: white;
+  text-decoration: none;
+
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
+const NavIcon = styled.button`
+  background: none;
+  cursor: pointer;
+  border: none;
+  outline: none;
+
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
+
+const Line = styled.span`
+  display: block;
+  border-radius: 50px;
+  width: 25px;
+  height: 3px;
+  margin: 5px;
+  background-color: #fff;
+  transition: width 0.4s ease-in-out;
+
+  :nth-child(2) {
+    width: ${props => (props.open ? "40%" : "70%")};
+  }
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  height: ${props => (props.open ? "91vh" : 0)};
+  width: 100vw;
+  background: #1c2022;
+  transition: height 0.4s ease-in-out;
+
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
+
+const OverlayMenu = styled.ul`
+  list-style: none;
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+
+  li {
+    opacity: ${props => (props.open ? 1 : 0)};
+    font-size: 25px;
+    margin: 50px 0px;
+    transition: opacity 0.4s ease-in-out;
+  }
+
+  li:nth-child(2) {
+    margin: 50px 0px;
+  }
+`;
+
+const Search = styled.form`
+  display: flex;
+  align-items: center;
+  position: relative;
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const SearchIcon = styled.i`
+  position: absolute;
+  left: 10px;
+`;
+
+const SearchInput = styled.input`
+  padding: 10px;
+  padding-left: 30px;
+  border: none;
+  border-radius: 25px;
+  margin: 0 10px;
+`;
+
+
+const OverlaySearch = styled.form`
+  display: flex;
+  align-items: center;
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
+
+const OverlaySearchIcon = styled.i`
+  margin-right: 10px;
+`;
+
+const OverlaySearchInput = styled.input`
+  padding: 5px;
+  border: none;
+  border-radius: 25px;
+`;
 
 
 export default Homepage
