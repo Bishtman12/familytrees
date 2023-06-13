@@ -1,154 +1,101 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useGlobalContext } from '../context/global';
 import About from './about';
 import FamilyTree from './tree';
+import { AsyncPaginate } from "react-select-async-paginate";
+
 
 function Homepage() {
 
-    const [toggle, toggleNav] = useState(false);
+  const [toggle, toggleNav] = useState(false);
 
-    const {
-        search,
-        handleSuggestions,
-        getTreeData,
-        handleChange,
-        handleSubmit,
-        searchResults,
-    } = useGlobalContext();
+  const {
+    search,
+    handleSuggestions,
+    getTreeData,
+    handleSelection
+  } = useGlobalContext();
 
-    const [rendered, setRendered] = React.useState('full_tree');
+  const [rendered, setRendered] = React.useState('full_tree');
 
-    const switchComponent = () => {
-        switch (rendered) {
-            case 'full_tree':
-                return <FamilyTree rendered={rendered} />;
-            case 'search_tree':
-                return <FamilyTree rendered={rendered} />;
-            case 'about_me':
-                return <About rendered={rendered} />;
-            default:
-                return <FamilyTree rendered={rendered} />;
-        }
-    };
+  const switchComponent = () => {
+    switch (rendered) {
+      case 'full_tree':
+        return <FamilyTree rendered={rendered} />;
+      case 'search_tree':
+        return <FamilyTree rendered={rendered} />;
+      case 'about_me':
+        return <About rendered={rendered} />;
+      default:
+        return <FamilyTree rendered={rendered} />;
+    }
+  };
 
-    const handleSuggestionClick = (suggestion) => {
-        console.log("suggestion", suggestion)
-        handleChange({ target: { value: suggestion } });
-        handleSubmit();
-        setRendered('search_tree');
-    };
-
-    return (
-        <>
-            <Nav>
-                <Logo href='/' onClick={() => setRendered('full_tree')}>
-                    Family Tree
-                </Logo>
-                <Search>
-                    <SearchIcon className="fa fa-search" />
-                    <SearchInput
-                        type="text"
-                        placeholder="Search..."
-                        value={search}
-                        onChange={(e) => {
-                            handleChange(e);
-                            handleSuggestions(e.target.value);
-                        }}
-                    />
-                    {searchResults.length > 0 && (
-                        <SuggestionsList>
-                            {searchResults.map((suggestion) => (
-                                <SuggestionItem
-                                    key={suggestion}
-                                    onClick={
-                                        (e) =>
-                                            handleSubmit(e)
-                                    }
-                                >
-                                    {suggestion}
-                                </SuggestionItem>
-                            ))}
-                        </SuggestionsList>
-                    )}
-                </Search>
-                <Menu>
-                    <Item>
-                        <Link onClick={() => {
-                            setRendered('full_tree');
-                            getTreeData();
-                        }}>
-                            Load Full Tree
-                        </Link>
-                    </Item>
-                    <Item>
-                        <Link onClick={() => setRendered('about_me')}>
-                            About me
-                        </Link>
-                    </Item>
-                    <Item>
-                        <Link onClick={() => setRendered('about_me')}>
-                            Contact Us
-                        </Link>
-                    </Item>
-                </Menu>
-                <NavIcon onClick={() => toggleNav(!toggle)}>
-                    <Line open={toggle} />
-                    <Line open={toggle} />
-                    <Line open={toggle} />
-                </NavIcon>
-            </Nav>
-            <Overlay open={toggle}>
-                <OverlayMenu open={toggle}>
-                    <OverlaySearch>
-                        <OverlaySearchIcon className="fa fa-search" />
-                        <OverlaySearchInput type="text" placeholder="Search..." />
-                    </OverlaySearch>
-                    <Item>
-                        <Link onClick={() => {
-                            setRendered('full_tree');
-                            getTreeData();
-                        }}>
-                            Load Full Tree
-                        </Link>
-                    </Item>
-                    <Item>
-                        <Link onClick={() => setRendered('about_me')}>
-                            About me
-                        </Link>
-                    </Item>
-                    <Item>
-                        <Link onClick={() => setRendered('about_me')}>
-                            Contact us
-                        </Link>
-                    </Item>
-                </OverlayMenu>
-            </Overlay>
-            {switchComponent()}
-        </>
-    );
+  return (
+    <>
+      <Nav>
+        <Logo href='/' onClick={() => setRendered('full_tree')}>
+          Family Tree
+        </Logo>
+        <AsyncPaginate
+          placeholder="Search your name here"
+          value={search}
+          onChange={handleSelection} // Update the onChange event handler
+          loadOptions={handleSuggestions}
+        />
+        <Menu>
+          <Item>
+            <Link onClick={() => {
+              setRendered('full_tree');
+              getTreeData();
+            }}>
+              Load Full Tree
+            </Link>
+          </Item>
+          <Item>
+            <Link onClick={() => setRendered('about_me')}>
+              About me
+            </Link>
+          </Item>
+          <Item>
+            <Link onClick={() => setRendered('about_me')}>
+              Contact Us
+            </Link>
+          </Item>
+        </Menu>
+        <NavIcon onClick={() => toggleNav(!toggle)}>
+          <Line open={toggle} />
+          <Line open={toggle} />
+          <Line open={toggle} />
+        </NavIcon>
+      </Nav>
+      <Overlay open={toggle}>
+        <OverlayMenu open={toggle}>
+          <Item>
+            <Link onClick={() => {
+              setRendered('full_tree');
+              getTreeData();
+            }}>
+              Load Full Tree
+            </Link>
+          </Item>
+          <Item>
+            <Link onClick={() => setRendered('about_me')}>
+              About me
+            </Link>
+          </Item>
+          <Item>
+            <Link onClick={() => setRendered('about_me')}>
+              Contact us
+            </Link>
+          </Item>
+        </OverlayMenu>
+      </Overlay>
+      {switchComponent()}
+    </>
+  );
 }
-const SuggestionsList = styled.ul`
-  list-style: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 0;
-  margin: 0;
-`;
-
-const SuggestionItem = styled.li`
-  padding: 8px 16px;
-  cursor: pointer;
-
-  :hover {
-    background-color: #f1f1f1;
-  }
-`;
 const Nav = styled.nav`
   padding: 0 20px;
   min-height: 9vh;
@@ -244,47 +191,6 @@ const OverlayMenu = styled.ul`
   li:nth-child(2) {
     margin: 50px 0px;
   }
-`;
-
-const Search = styled.form`
-  display: flex;
-  align-items: center;
-  position: relative;
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
-const SearchIcon = styled.i`
-  position: absolute;
-  left: 10px;
-`;
-
-const SearchInput = styled.input`
-  padding: 10px;
-  padding-left: 30px;
-  border: none;
-  border-radius: 25px;
-  margin: 0 10px;
-`;
-
-
-const OverlaySearch = styled.form`
-  display: flex;
-  align-items: center;
-  @media (min-width: 769px) {
-    display: none;
-  }
-`;
-
-const OverlaySearchIcon = styled.i`
-  margin-right: 10px;
-`;
-
-const OverlaySearchInput = styled.input`
-  padding: 5px;
-  border: none;
-  border-radius: 25px;
 `;
 
 

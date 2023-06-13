@@ -32,7 +32,7 @@ export const GlobalContextProvider = ({ children }) => {
     //intial state
     const intialState = {
         treeData: {},
-        searchResults: [],
+        searchResults: {},
         isSearch: false,
         loading: false,
     }
@@ -46,7 +46,10 @@ export const GlobalContextProvider = ({ children }) => {
 
 
     const handleChange = (e) => {
+        console.log(e)
         setSearch(e.target.value);
+        console.log("search --> ", search, e.target.value)
+        handleSuggestions(e.target.value)
         if (e.target.value === '') {
             state.isSearch = false;
         }
@@ -54,10 +57,9 @@ export const GlobalContextProvider = ({ children }) => {
 
     //handle submit
     const handleSubmit = (e) => {
-        console.log(e)
-        e.preventDefault();
-        if (search) {
-            getSearchTreeData(search);
+        console.log("HS",e)
+        if (e) {
+            getSearchTreeData(e);
             state.isSearch = true;
         }
         else {
@@ -73,9 +75,10 @@ export const GlobalContextProvider = ({ children }) => {
     // get the name specific tree
     const getSearchTreeData = async (searchName) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/v1/tree/?name=${searchName}`);
+            console.log("search:", searchName?.value)
+            const response = await fetch(`http://127.0.0.1:8000/v1/tree/?name=${searchName?.value}`);
             const data = await response.json();
-            console.log(data)
+
             dispatch({ type: GET_SEARCH_TREE_DATA, payload: data })
         }
         catch {
@@ -85,16 +88,31 @@ export const GlobalContextProvider = ({ children }) => {
 
     // get search name array
     const handleSuggestions = async (value) => {
-        if (!value) { dispatch({ type: GET_SEARCH_SUGGESTIONS, payload: [] }) }
         try {
-            const response = await fetch(`http://127.0.0.1:8000/v1/${value}/suggest`);
+            const response = await fetch(`http://127.0.0.1:8000/v1/suggest?name=${value}`);
             const data = await response.json();
-            dispatch({ type: GET_SEARCH_SUGGESTIONS, payload: data?.result.slice(0,5) ?? [] })
+
+            const options = data?.result.map((name) => ({
+                value: name,
+                label: name,
+            })) ?? [];
+
+            console.log(options)
+            dispatch({ type: GET_SEARCH_SUGGESTIONS, payload: { options } });
+
+            return {options}
+
+        } catch (error) {
+            console.error(error);
+            dispatch({ type: GET_SEARCH_SUGGESTIONS, payload: {} });
         }
-        catch {
-            // get the whole array or empty array of names
-            dispatch({ type: GET_SEARCH_SUGGESTIONS, payload: [] })
-        }
+    };
+
+
+    const handleSelection = (selectedOption) => {
+        console.log("SELECT")
+        setSearch(selectedOption);
+        handleSubmit(selectedOption);
     };
 
     return (
@@ -104,8 +122,8 @@ export const GlobalContextProvider = ({ children }) => {
             getSearchTreeData,
             getTreeData,
             handleChange,
-            handleSubmit
-
+            handleSubmit,
+            handleSelection
         }}>
             {children}
         </GlobalContext.Provider>

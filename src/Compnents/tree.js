@@ -16,18 +16,26 @@ const innerHeight = window.innerHeight;
 const innerWidth = window.innerWidth;
 
 function NodeLabel(node) {
-    const { nodeData } = node;
+    const { nodeData, toggleNode } = node;
+    console.log(node)
     const hasChildren = nodeData._children;
-    const btnClass = hasChildren ? "button " : "button-secondary"
+    let btnClass = hasChildren ? "button " : "button-secondary";
+    if (nodeData.is_current) {
+        btnClass = "button-current";
+    }
     const btnStyle = {
-        cursor: hasChildren ? "pointer" : "default",
+        cursor: hasChildren ? "pointer" : "default"
     };
+
     return (
         <button className={btnClass} style={btnStyle}>
+            <button>Info </button>
+            <button onClick={() => toggleNode()}>{nodeData._collapsed ? 'Expand' : 'Collapse'}</button>
             {nodeData.name}
         </button>
     );
 }
+
 
 
 function FamilyTree() {
@@ -113,7 +121,20 @@ const TreeStyled = styled.div`
     font-size: 14px;
     font-weight: bold;
   }
-  
+  .button-current {
+    background-image: black;
+    padding: 0.8rem;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.8s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 18px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
   .button:hover {
     background-position: right center;
     color: #fff;
