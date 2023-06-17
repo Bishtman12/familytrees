@@ -16,7 +16,7 @@ const innerHeight = window.innerHeight;
 const innerWidth = window.innerWidth;
 
 function NodeLabel(node) {
-    const { nodeData, toggleNode } = node;
+    const { nodeData } = node;
     console.log(node)
     const hasChildren = nodeData._children;
     let btnClass = hasChildren ? "button " : "button-secondary";
@@ -29,8 +29,6 @@ function NodeLabel(node) {
 
     return (
         <button className={btnClass} style={btnStyle}>
-            <button>Info </button>
-            <button onClick={() => toggleNode()}>{nodeData._collapsed ? 'Expand' : 'Collapse'}</button>
             {nodeData.name}
         </button>
     );

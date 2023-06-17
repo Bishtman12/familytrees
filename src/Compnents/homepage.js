@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useGlobalContext } from '../context/global';
 import About from './about';
 import FamilyTree from './tree';
 import { AsyncPaginate } from "react-select-async-paginate";
 
-
 function Homepage() {
-
-  const [toggle, toggleNav] = useState(false);
-
+  const [toggle, setToggle] = useState(false);
   const {
     search,
     handleSuggestions,
@@ -17,7 +14,7 @@ function Homepage() {
     handleSelection
   } = useGlobalContext();
 
-  const [rendered, setRendered] = React.useState('full_tree');
+  const [rendered, setRendered] = useState('full_tree');
 
   const switchComponent = () => {
     switch (rendered) {
@@ -32,18 +29,24 @@ function Homepage() {
     }
   };
 
+  const closeOverlay = () => {
+    setToggle(false);
+  };
+
   return (
     <>
       <Nav>
         <Logo href='/' onClick={() => setRendered('full_tree')}>
           Family Tree
         </Logo>
-        <AsyncPaginate
-          placeholder="Search your name here"
-          value={search}
-          onChange={handleSelection} // Update the onChange event handler
-          loadOptions={handleSuggestions}
-        />
+        <SearchWrapper>
+          <AsyncPaginate
+            placeholder="Search your name here"
+            value={search}
+            onChange={handleSelection}
+            loadOptions={handleSuggestions}
+          />
+        </SearchWrapper>
         <Menu>
           <Item>
             <Link onClick={() => {
@@ -64,29 +67,44 @@ function Homepage() {
             </Link>
           </Item>
         </Menu>
-        <NavIcon onClick={() => toggleNav(!toggle)}>
+        <NavIcon onClick={() => setToggle(!toggle)}>
           <Line open={toggle} />
           <Line open={toggle} />
           <Line open={toggle} />
         </NavIcon>
       </Nav>
-      <Overlay open={toggle}>
+      <Overlay open={toggle} onClick={closeOverlay}>
         <OverlayMenu open={toggle}>
+          <Item>
+            <AsyncPaginate
+              placeholder="Search here"
+              value={search}
+              onChange={handleSelection}
+              loadOptions={handleSuggestions}
+            />
+          </Item>
           <Item>
             <Link onClick={() => {
               setRendered('full_tree');
               getTreeData();
+              closeOverlay();
             }}>
               Load Full Tree
             </Link>
           </Item>
           <Item>
-            <Link onClick={() => setRendered('about_me')}>
+            <Link onClick={() => {
+              setRendered('about_me');
+              closeOverlay();
+            }}>
               About me
             </Link>
           </Item>
           <Item>
-            <Link onClick={() => setRendered('about_me')}>
+            <Link onClick={() => {
+              setRendered('about_me');
+              closeOverlay();
+            }}>
               Contact us
             </Link>
           </Item>
@@ -96,12 +114,13 @@ function Homepage() {
     </>
   );
 }
+
 const Nav = styled.nav`
   padding: 0 20px;
   min-height: 9vh;
-  background: #141E30;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #141E30;
+  background: -webkit-linear-gradient(to right, #243B55, #141E30);
+  background: linear-gradient(to right, #243B55, #141E30);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -112,10 +131,21 @@ const Logo = styled.h1`
   color: white;
 `;
 
+const SearchWrapper = styled.div`
+  flex: 0.5;
+  margin: 0 10px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const Menu = styled.ul`
   list-style: none;
   display: flex;
-
+  color:white;
+  text-align:center;
+  margin-top:20px;
   li:nth-child(2) {
     margin: 0px 20px;
   }
@@ -125,10 +155,19 @@ const Menu = styled.ul`
   }
 `;
 
-const Item = styled.li``;
+const Item = styled.li`
+  margin: 0 10px;
+  a {
+    text-decoration: none;
+    text-align: center;
+
+    :hover {
+      text-decoration: underline;
+    }
+  }
+`;
 
 const Link = styled.a`
-
   color: white;
   text-decoration: none;
 
@@ -163,29 +202,43 @@ const Line = styled.span`
 `;
 
 const Overlay = styled.div`
-  position: absolute;
-  height: ${props => (props.open ? "91vh" : 0)};
+  position: fixed;
+  top: 0;
+  left: 0;
+  color:white;
+  height: ${props => (props.open ? "100vh" : 0)};
   width: 100vw;
   background: #1c2022;
   transition: height 0.4s ease-in-out;
-
-  @media (min-width: 769px) {
-    display: none;
-  }
+  overflow: hidden;
+  z-index: 1;
 `;
 
 const OverlayMenu = styled.ul`
   list-style: none;
   position: absolute;
   left: 50%;
-  top: 45%;
+  top: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   li {
     opacity: ${props => (props.open ? 1 : 0)};
     font-size: 25px;
-    margin: 50px 0px;
+    margin: 10px 0;
     transition: opacity 0.4s ease-in-out;
+
+    a {
+      color: white;
+      text-decoration: none;
+      text-align: center;
+
+      :hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   li:nth-child(2) {
@@ -193,5 +246,4 @@ const OverlayMenu = styled.ul`
   }
 `;
 
-
-export default Homepage
+export default Homepage;
