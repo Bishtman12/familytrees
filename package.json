@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "mdb-react-ui-kit": "^6.1.0",
     "react": "^18.2.0",
     "react-d3-tree": "1.16.1",
     "react-dom": "^18.2.0",

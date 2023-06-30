@@ -3,6 +3,7 @@ import Tree from "react-d3-tree";
 import { useGlobalContext } from "../context/global"
 import initialTreeData from "../Data.json"
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const svgSquare = {
     shape: "node",
@@ -17,7 +18,6 @@ const innerWidth = window.innerWidth;
 
 function NodeLabel(node) {
     const { nodeData } = node;
-    console.log(node)
     const hasChildren = nodeData._children;
     let btnClass = hasChildren ? "button " : "button-secondary";
     if (nodeData.is_current) {
@@ -27,14 +27,17 @@ function NodeLabel(node) {
         cursor: hasChildren ? "pointer" : "default"
     };
 
+    console.log(nodeData)
+
     return (
         <button className={btnClass} style={btnStyle}>
             {nodeData.name}
+            <Link to={`/tree/${nodeData.id}`} className="info-button">
+                ℹ️
+            </Link>
         </button>
     );
 }
-
-
 
 function FamilyTree() {
 
