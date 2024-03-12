@@ -11,10 +11,10 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-    background: #c3c6c432;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(234,249,249,0.67) 0.1%, rgba(239,249,251,0.63) 90.1% );
     overflow: hidden;
     }
-    
+
 `;
 
 

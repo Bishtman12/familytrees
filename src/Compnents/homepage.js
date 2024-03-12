@@ -118,9 +118,9 @@ function Homepage() {
 const Nav = styled.nav`
   padding: 0 20px;
   min-height: 9vh;
-  background: #141E30;
-  background: -webkit-linear-gradient(to right, #243B55, #141E30);
-  background: linear-gradient(to right, #243B55, #141E30);
+  background: #6a11cb;
+  background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 0.9), rgba(37, 117, 252, 0.9));
+  background: linear-gradient(to right, rgba(106, 17, 203, 0.9), rgba(37, 117, 252, 0.9));
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -177,11 +177,10 @@ const Link = styled.a`
 `;
 
 const NavIcon = styled.button`
-  background: none;
   cursor: pointer;
   border: none;
   outline: none;
-
+  color : white;
   @media (min-width: 769px) {
     display: none;
   }
